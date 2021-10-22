@@ -62,7 +62,7 @@ public class Author implements Serializable {
 	@Column(name=BookAppConstant.COL_AUTHORABOUT, length =300)
 	private String authorAbout;
 	
-	@Column(name="testaaa")
+	@Column(name="author_images_name")
 	private String imageName;
 	
 	@Column(name=BookAppConstant.COL_AUTHORIMAGENAME)

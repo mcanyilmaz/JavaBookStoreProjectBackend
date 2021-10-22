@@ -30,9 +30,7 @@ public class ImageModel {
 	
 	@Column(name = "type")
 	private String type;
-	
-    //image bytes can have large lengths so we specify a value
-    //which is more than the default length for picByte column
+
 	@Column(name = "picByte", length = 10000)
 	private byte[] picByte;
 	
@@ -41,10 +39,6 @@ public class ImageModel {
 	public ImageModel() {
 		
 	}
-	
-	//public ImageModel() {
-	//	super();
-	//}
 	
 	public ImageModel(String name, String type, byte[] picByte) {
 		this.name = name;

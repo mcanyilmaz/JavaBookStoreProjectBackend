@@ -29,9 +29,7 @@ import com.bookApplication2.BookApplication2.service.UserService;
 		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	//@Autowired
-	//UserDetailsServiceImpl userDetailsService;
-	
+
 
 	@Autowired
 	UserService userService;

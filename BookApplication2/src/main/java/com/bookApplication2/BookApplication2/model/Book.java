@@ -56,7 +56,7 @@ public class Book implements Serializable {
 	@Column(name=BookAppConstant.COL_BOOKCREATEDATE)
 	private LocalDateTime createDate;
 	
-	@Column(name="tatatatat")
+	@Column(name="book_images_name")
 	private String bookImageName;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -74,10 +74,6 @@ public class Book implements Serializable {
 	//private ImageModel imageModel;
 
 	
-	
-	// buradan sonrası ımage için
-	
-	
 	@Column(name=BookAppConstant.COL_BOOKIMAGENAME)
 	private String name;
 	
@@ -86,9 +82,6 @@ public class Book implements Serializable {
 	
 	@Column(name = BookAppConstant.COL_BOOKIMAGEPICBYTE, length = 10000)
 	private byte[] picByte;
-	
-	
-
 	
 	/*
 	//LAZY user objesini db den hemen çekme post objesini çektiğimde ilgili useri getirme
