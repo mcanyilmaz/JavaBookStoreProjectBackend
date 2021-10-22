@@ -1,11 +1,14 @@
 package com.bookApplication2.BookApplication2.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
+
+import com.bookApplication2.BookApplication2.util.BookAppConstant;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +22,20 @@ import javax.persistence.*;
 	
 
 @Entity
-@Table(	name = "users", 
+@Table(	name = BookAppConstant.TABLE_USERTABLENAME, 
 		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
+			@UniqueConstraint(columnNames = BookAppConstant.COL_USERUSERNAME),
+			@UniqueConstraint(columnNames = BookAppConstant.COL_USERUSEREMAIL) 
 		})
-public class User {
+
+@Data
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -594215680151416582L;
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -35,31 +46,42 @@ public class User {
 
 	private String email;
 
-
+	@Column(name=BookAppConstant.COL_USERUSERPASSWORD)
 	private String password;
 	
-	@Column(name="name")
+	@Column(name=BookAppConstant.COL_USERPERSONNAME)
 	private String name;
-	@Column(name="surname")
+	@Column(name=BookAppConstant.COL_USERPERSONSURNAME)
 	private String surname;
 	
-	@Column(name="userPhoneNumber")
+	@Column(name=BookAppConstant.COL_USERPERSONPHONENUMBER)
 	private String userPhoneNumber;
 	
 	
 
-	@Column(name="userAddress")
+	@Column(name=BookAppConstant.COL_USERADDRESS)
 	private String userAddress;
 	
-	@Column(name="createTime")
+	@Column(name=BookAppConstant.COL_USERCREATETIME)
 	private LocalDateTime createTime;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
+	@JoinTable(	name = BookAppConstant.COL_USERUSERROLES, 
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
+	
+	@Column(name = BookAppConstant.COL_USERIMAGENAME)
+	private String imageName;
+	
+	@Column(name = BookAppConstant.COL_USERIMAGETYPE)
+	private String type;
+	
+	@Column(name = BookAppConstant.COL_USERIMAGEPICBYTE, length = 10000)
+	private byte[] picByte;
+	
+	
 	public User() {
 	}
 	
@@ -76,7 +98,7 @@ public class User {
 		this.userAddress = userAddress;
 		this.createTime = createTime;
 	}
-	
+	/*
 	public String getUserPhoneNumber() {
 		return userPhoneNumber;
 	}
@@ -154,7 +176,7 @@ public class User {
 		this.roles = roles;
 	}
 
-	
+	*/
 	
 	
 	

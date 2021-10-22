@@ -1,5 +1,6 @@
 package com.bookApplication2.BookApplication2.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.bookApplication2.BookApplication2.util.BookAppConstant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,26 +26,32 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="comments")
-public class Comment {
+@Table(name=BookAppConstant.TABLE_COMMENTTABLENAME)
+public class Comment implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5345309821895861521L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="comment")
+	@Column(name=BookAppConstant.COL_COMMENTCOMMENTNAME)
 	private String comment;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name=BookAppConstant.COL_COMMENTCREATETIME)
 	private LocalDateTime createTime;
 	
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "book_id")
+	@JoinColumn(name = BookAppConstant.COL_COMMENTBOOKID)
 	private Book book;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = BookAppConstant.COL_COMMENTUSERID)
 	private User user;
 	
 	

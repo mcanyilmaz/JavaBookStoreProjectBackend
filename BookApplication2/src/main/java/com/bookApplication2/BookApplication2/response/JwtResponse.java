@@ -2,6 +2,7 @@ package com.bookApplication2.BookApplication2.response;
 
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JwtResponse {
@@ -17,6 +18,8 @@ public class JwtResponse {
 	
 	private String userPhoneNumber;
 	
+	private LocalDateTime createTime;
+
 
 	private String userAddress;
 	
@@ -24,7 +27,7 @@ public class JwtResponse {
 
 	public JwtResponse(String accessToken, Long id, String username, String email,
 			String name, String surname,
-			String userPhoneNumber, String userAddress,
+			String userPhoneNumber, String userAddress, LocalDateTime createTime,
 			
 			List<String> roles) {
 		this.token = accessToken;
@@ -35,9 +38,21 @@ public class JwtResponse {
 		this.surname = surname;
 		this.userPhoneNumber = userPhoneNumber;
 		this.userAddress = userAddress;
+		this.createTime = createTime;
 		this.roles = roles;
 	}
 
+	public LocalDateTime getCreateTime() {
+		return createTime;
+	}
+
+
+	public void setCreateTime(LocalDateTime createTime) {
+		this.createTime = createTime;
+	}
+
+	
+	
 	
 	public String getUserPhoneNumber() {
 		return userPhoneNumber;

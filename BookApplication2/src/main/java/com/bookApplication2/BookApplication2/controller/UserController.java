@@ -1,5 +1,6 @@
 package com.bookApplication2.BookApplication2.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bookApplication2.BookApplication2.exception.ResourceNotFoundException;
 import com.bookApplication2.BookApplication2.model.User;
+import com.bookApplication2.BookApplication2.requests.UserCreateDataDetails;
 import com.bookApplication2.BookApplication2.requests.UserCreateRequest;
 import com.bookApplication2.BookApplication2.service.UserService;
 
@@ -69,6 +73,24 @@ public class UserController {
 		return userService.findByEmail(email);
 				
 	}
+	
+	@PutMapping("/addUserDataDetails/")
+	public User addUserData2(@RequestParam("imageFile")MultipartFile file,@RequestParam("payload") String payload) throws IOException {
+
+		return userService.addUserData(file,payload);
+		
+	}
+	
+	@GetMapping("/getUserData")
+	//@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	public User getUserData(@RequestParam String userName) {
+		
+		User user = userService.getByUsername(userName);
+		
+		return user;
+	}
+	
+
 
 	
 }

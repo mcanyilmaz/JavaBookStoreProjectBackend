@@ -1,5 +1,6 @@
 package com.bookApplication2.BookApplication2.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.bookApplication2.BookApplication2.util.BookAppConstant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,41 +30,57 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name="author")
+@Table(name=BookAppConstant.TABLE_AUTHORTABLENAME)
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Author {
+public class Author implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9111465956991049780L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name=BookAppConstant.COL_AUTHORCREATEDATE)
 	private LocalDateTime createdDate;
 	
 	//private LocalDate createdDate = LocalDate.now();
 
 	
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@Column(name=BookAppConstant.COL_AUTHORUPDATEDATE)
 	private LocalDateTime updateDate;
 	
-	@Column(name="author_name")
+	@Column(name=BookAppConstant.COL_AUTHORNAME)
 	private String authorName;
 	
-	@Column(name="author_about", length =300)
+	@Column(name=BookAppConstant.COL_AUTHORABOUT, length =300)
 	private String authorAbout;
 	
-	@Column(name="image_name")
+	@Column(name="testaaa")
 	private String imageName;
+	
+	@Column(name=BookAppConstant.COL_AUTHORIMAGENAME)
+	private String name;
+	
+	@Column(name=BookAppConstant.COL_AUTHORIMAGETYPE)
+	private String type;
+	
+	@Column(name =BookAppConstant.COL_AUTHORIMAGEPICBYTE , length = 10000)
+	private byte[] picByte;
+	
 	
 	
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.EAGER)
 	//@OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name="author_id")
+	@JoinColumn(name=BookAppConstant.COL_LISTAUTHORID)
 	private List<Book> books;
 	
 	

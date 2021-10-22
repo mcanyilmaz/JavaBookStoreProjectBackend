@@ -1,5 +1,6 @@
 package com.bookApplication2.BookApplication2.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bookApplication2.BookApplication2.model.Author;
 import com.bookApplication2.BookApplication2.model.Category;
 import com.bookApplication2.BookApplication2.requests.CategoryCreateRequest;
 import com.bookApplication2.BookApplication2.response.MessageResponse;
@@ -38,10 +41,26 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/addCategory")
+	public Category addCategory(@RequestParam("imageFile")MultipartFile file,@RequestParam("payload") String payload) throws IOException  {
+		
+		
+		return categoryService.addCategory(file, payload);
+		
+	}
+	
+	
+	/*@PostMapping("/addCategory")
 	public ResponseEntity<?>addCategory(@RequestBody CategoryCreateRequest categoryCreateDto) {
 		
+		if(category.isPresent()) {
+			return ResponseEntity
+					.badRequest()
+					.body(new MessageResponse("Bu Kategori Zaten Kayıtlı"));
+			
+		}
 		return new ResponseEntity<>(categoryService.addCategory(categoryCreateDto),HttpStatus.OK);
-	}
+	}*/
+	
 	
 	@GetMapping("/getAllCategory")
 	public ResponseEntity<List<Category>> getAllCategory(){
@@ -71,8 +90,8 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/findByCategoryName/")
-	public ResponseEntity<Optional<Category>> findByCategoryName(@RequestParam String categoryCreateDto) {
-		return new ResponseEntity<Optional<Category>>( categoryService.findByCategoryName(categoryCreateDto),HttpStatus.OK);
+	public ResponseEntity<Optional<Category>> findByCategoryName(@RequestParam String categoryName) {
+		return new ResponseEntity<Optional<Category>>( categoryService.findByCategoryName(categoryName),HttpStatus.OK);
 		
 	}
 	

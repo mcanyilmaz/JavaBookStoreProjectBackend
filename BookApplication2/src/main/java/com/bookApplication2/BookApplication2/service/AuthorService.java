@@ -28,6 +28,9 @@ import com.bookApplication2.BookApplication2.model.ImageModel;
 import com.bookApplication2.BookApplication2.repository.AuthorRepository;
 import com.bookApplication2.BookApplication2.requests.AuthorCreateRequest;
 import com.bookApplication2.BookApplication2.requests.AuthorUpdateRequest;
+import com.bookApplication2.BookApplication2.requests.BookCreateRequest;
+import com.bookApplication2.BookApplication2.util.ImageUtility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class AuthorService {
@@ -47,7 +50,13 @@ public class AuthorService {
 	}
 	
 	
-	public Author addAuthor(AuthorCreateRequest authorCreateDto) {
+	public Author addAuthor(MultipartFile file,String json) throws IOException {
+		
+		
+		
+		AuthorCreateRequest authorCreateRequest = new ObjectMapper().readValue(json,AuthorCreateRequest.class);
+
+		
 		
 		Author author = new Author();
 		LocalDateTime createdDate = LocalDateTime.now();
@@ -56,18 +65,25 @@ public class AuthorService {
 		
 		//author.setImageModal(img);
 		
+		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				ImageUtility.compressBytes(file.getBytes()));
 		
-		author.setAuthorName(authorCreateDto.getAuthorName());
 		
-		author.setAuthorAbout(authorCreateDto.getAuthorAbout());
-		//author.setCreatedDate(authorCreateDto.getCreatedDate());
-
 		
-		//author.setCreatedDate(authorCreateDto.getCreatedDate());
+		author.setAuthorName(authorCreateRequest.getAuthorName());
+		
+		author.setAuthorAbout(authorCreateRequest.getAuthorAbout());
+	
 		author.setCreatedDate(createdDate);
-		author.setImageName(authorCreateDto.getImageName());	
+		author.setImageName(authorCreateRequest.getImageName());	
 		
-		author.setUpdateDate(authorCreateDto.getUpdateDate());
+		author.setUpdateDate(authorCreateRequest.getUpdateDate());
+		
+		author.setName(file.getName());
+		author.setType(file.getContentType());
+	
+		author.setPicByte(ImageUtility.decompressBytes(img.getPicByte()));	
+
 		
 		//author.setBooks(authorCreateDto.getBooks());
 		
@@ -112,7 +128,7 @@ public class AuthorService {
 		
 		
 	}
-	
+	/*
 	
 	// compress the image bytes before storing it in the database
 		public static byte[] compressBytes(byte[] data) {
@@ -149,6 +165,6 @@ public class AuthorService {
 			}
 			return outputStream.toByteArray();
 		}
-	
+	*/
 
 }

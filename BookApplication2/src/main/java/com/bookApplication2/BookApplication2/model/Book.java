@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name="book")
+@Table(name=BookAppConstant.TABLE_BOOKTABLENAME)
 @NoArgsConstructor
 @AllArgsConstructor
 
@@ -44,64 +44,51 @@ public class Book implements Serializable {
 	@Column(name=BookAppConstant.COL_BOOKNAME)
 	private String bookName;
 	
-	@Column(name="book_price")
+	@Column(name=BookAppConstant.COL_BOOKPRICE)
 	private int bookPrice;
-	
-	@Column(name="book_details",length =400)
+		
+	@Column(name=BookAppConstant.COL_BOOKDETAILS,length =400)
 	private String bookDetails;
 	
-	@Column(name="book_stock")
+	@Column(name=BookAppConstant.COL_BOOKSTOCK)
 	private int bookStock;
 	
-	@Column(name="book_create_date")
+	@Column(name=BookAppConstant.COL_BOOKCREATEDATE)
 	private LocalDateTime createDate;
 	
-	@Column(name="book_image_name")
+	@Column(name="tatatatat")
 	private String bookImageName;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	
 	//@ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REFRESH})
-	@JoinColumn(name = "author_id")
+	@JoinColumn(name = BookAppConstant.COL_BOOKAUTHORID)
 	private Author author;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "category_id")
+	@JoinColumn(name = BookAppConstant.COL_CATEGORYID)
 	private Category category;
 	
 	
-	@OneToOne
-	@JoinColumn(name="image_id")
-	private ImageModel imageModel;
+	//@OneToOne
+	//@JoinColumn(name="image_id")
+	//private ImageModel imageModel;
 
 	
 	
 	// buradan sonrası ımage için
 	
 	
-	@Column(name = "name")
+	@Column(name=BookAppConstant.COL_BOOKIMAGENAME)
 	private String name;
 	
-	@Column(name = "type")
+	@Column(name=BookAppConstant.COL_BOOKIMAGETYPE)
 	private String type;
 	
-    //image bytes can have large lengths so we specify a value
-    //which is more than the default length for picByte column
-	@Column(name = "picByte", length = 10000)
+	@Column(name = BookAppConstant.COL_BOOKIMAGEPICBYTE, length = 10000)
 	private byte[] picByte;
 	
 	
-	/*@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "image_id")
-	private ImageModel imageModel;
-	*/
-	
-	/*
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="author_id",nullable = false)
-	private Author author;
-	*/
-	
+
 	
 	/*
 	//LAZY user objesini db den hemen çekme post objesini çektiğimde ilgili useri getirme

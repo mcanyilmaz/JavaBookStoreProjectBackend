@@ -1,11 +1,18 @@
 package com.bookApplication2.BookApplication2.model;
 
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6823159422573683725L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;

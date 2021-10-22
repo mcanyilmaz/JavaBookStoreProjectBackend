@@ -1,6 +1,7 @@
 package com.bookApplication2.BookApplication2.service;
 
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +32,8 @@ public class UserDetailsImpl implements UserDetails {
 	
 	private String userPhoneNumber;
 	
-	
+	private LocalDateTime createTime;
+
 
 	private String userAddress;
 
@@ -40,7 +42,7 @@ public class UserDetailsImpl implements UserDetails {
 	private Collection<? extends GrantedAuthority> authorities;
 
 	public UserDetailsImpl(Long id, String username, String email, String password, String name,
-			String surname, String userPhoneNumber, String userAddress,
+			String surname, String userPhoneNumber, String userAddress, LocalDateTime createTime,
 			Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
@@ -50,6 +52,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.surname = surname;
 		this.userPhoneNumber = userPhoneNumber;
 		this.userAddress = userAddress;
+		this.createTime = createTime;
 		this.authorities = authorities;
 	}
 
@@ -67,8 +70,18 @@ public class UserDetailsImpl implements UserDetails {
 				user.getSurname(),
 				user.getUserPhoneNumber(),
 				user.getUserAddress(),
+				user.getCreateTime(),
 				authorities);
 	}
+	
+	public LocalDateTime getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(LocalDateTime createTime) {
+		this.createTime = createTime;
+	}
+
 	
 	
 	public String getUserPhoneNumber() {

@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.bookApplication2.BookApplication2.config.jwt.AuthEntryPointJwt;
 import com.bookApplication2.BookApplication2.config.jwt.AuthTokenFilter;
-import com.bookApplication2.BookApplication2.service.UserDetailsServiceImpl;
+import com.bookApplication2.BookApplication2.service.UserService;
 
 
 
@@ -29,8 +29,12 @@ import com.bookApplication2.BookApplication2.service.UserDetailsServiceImpl;
 		// jsr250Enabled = true,
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	//@Autowired
+	//UserDetailsServiceImpl userDetailsService;
+	
+
 	@Autowired
-	UserDetailsServiceImpl userDetailsService;
+	UserService userService;
 
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
@@ -42,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(passwordEncoder());
 	}
 
 	@Bean
@@ -65,6 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/v1/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.antMatchers("/image/**").permitAll()
+			.antMatchers("/slider/**").permitAll()
 			.antMatchers("/**").permitAll()
 			//.antMatchers("/api/test/**").permitAll()
 			.anyRequest().authenticated();

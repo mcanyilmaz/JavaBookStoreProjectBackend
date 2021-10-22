@@ -78,14 +78,24 @@ public class BookController {
 	
 
 
-	@PostMapping("/addBook")
-	public ResponseEntity<Book> addBook(@RequestBody BookCreateRequest bookCreateDto,@RequestParam("imageFile")MultipartFile file) throws IOException {
+	/*@PostMapping("/addBook")
+	public ResponseEntity<Book> addBook(@RequestBody BookCreateRequest bookCreateDto) throws IOException {
 		
-		return new ResponseEntity<Book>(bookService.addBook(bookCreateDto,file),HttpStatus.CREATED);
+		return new ResponseEntity<Book>(bookService.addBook(bookCreateDto),HttpStatus.CREATED);
+		
+		//return bookService.addBook(bookCreateDto);
+		
+	}*/
+	
+	@PostMapping("/addBook")
+	public ResponseEntity<Book> addBook2(@RequestParam("imageFile")MultipartFile file,@RequestParam("payload") String payload ) throws IOException {
+		
+		return new ResponseEntity<Book>(bookService.addBook(file,payload),HttpStatus.CREATED);
 		
 		//return bookService.addBook(bookCreateDto);
 		
 	}
+	
 	
 	/*
 	@PostMapping("/addBook")
@@ -120,8 +130,8 @@ public class BookController {
 	}
 	
 	@GetMapping("/findByBookName/")
-	public ResponseEntity<Optional<Book>> findByBookName(@RequestParam String bookName) {
-		return new ResponseEntity<Optional<Book>>(bookService.findByBookName(bookName),HttpStatus.OK);
+	public ResponseEntity<List<Book>> findByBookName(@RequestParam String bookName) {
+		return new ResponseEntity<List<Book>>(bookService.findByBookName(bookName),HttpStatus.OK);
 		//return bookService.findByBookName(bookName);
 	}
 	

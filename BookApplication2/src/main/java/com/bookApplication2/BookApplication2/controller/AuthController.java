@@ -78,6 +78,7 @@ public class AuthController {
 												 userDetails.getSurname(),
 												 userDetails.getUserPhoneNumber(),
 												 userDetails.getUserAddress(),
+												 userDetails.getCreateTime(),
 												 roles));
 	}
 
@@ -95,7 +96,7 @@ public class AuthController {
 					.body(new MessageResponse("Hata: Email Daha Önceden Kayıt Edilmiş!"));
 		}
 
-		LocalDateTime createdDate = LocalDateTime.now();
+		LocalDateTime createdTime = LocalDateTime.now();
 
 		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), 
@@ -105,7 +106,7 @@ public class AuthController {
 							 signUpRequest.getSurname(),
 							 "henüz girilmedi",
 							 "henüz girilmedi",
-							 createdDate
+							 createdTime
 							);
 
 		Set<String> strRoles = signUpRequest.getRole();

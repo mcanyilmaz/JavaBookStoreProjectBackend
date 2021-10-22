@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bookApplication2.BookApplication2.model.Author;
 import com.bookApplication2.BookApplication2.model.Book;
@@ -39,14 +40,25 @@ public class AuthorController {
 	}
 	
 	
-	
+	/*
 	@PostMapping("/addAuthor")
 	public Author addAuthor(@RequestBody AuthorCreateRequest authorCreateDto)  {
 		
 		
 		return authorService.addAuthor(authorCreateDto);
 		
+	}*/
+	
+	@PostMapping("/addAuthor")
+	public Author addAuthor(@RequestParam("imageFile")MultipartFile file,@RequestParam("payload") String payload) throws IOException  {
+		
+		
+		return authorService.addAuthor(file, payload);
+		
 	}
+	
+	
+	
 	
 	
 	@GetMapping("/getAllAuthor")

@@ -23,6 +23,7 @@ import com.bookApplication2.BookApplication2.repository.BookRepository;
 import com.bookApplication2.BookApplication2.repository.CategoryRepository;
 import com.bookApplication2.BookApplication2.requests.BookCreateRequest;
 import com.bookApplication2.BookApplication2.util.ImageUtility;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.bytebuddy.asm.Advice.Local;
 
@@ -52,12 +53,19 @@ public class BookService {
 		Pageable pageable = PageRequest.of(pageSize, 4);
 		
 		 List<Book> books = bookRepository.findAll();
-	        for (Book book:books){
+		 
+	     /*   for (Book book:books){
 	        
 	            if(book.getImageModel() != null){
 	            	book.getImageModel().setPicByte(ImageUtility.decompressBytes(book.getImageModel().getPicByte()));
 	            }
-	        }
+	        }*/
+	        
+	       /* for (Book book:books){
+		       book.setPicByte(ImageUtility.decompressBytes(book.getPicByte()));
+	            
+	        }*/
+	        
 
 	
 		return bookRepository.getByCategory_id(id,pageable);
@@ -65,8 +73,8 @@ public class BookService {
 
 	}
 	
-
-	public Book addBook(BookCreateRequest bookCreateDto, MultipartFile file) throws IOException {
+/*
+	public Book addBook(BookCreateRequest bookCreateDto) throws IOException {
 		
 		LocalDateTime bookCreateTime = LocalDateTime.now();
 			 
@@ -85,13 +93,13 @@ public class BookService {
 		
 	
 		
-		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
-				ImageUtility.compressBytes(file.getBytes()));
+		//ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				//ImageUtility.compressBytes(file.getBytes()));
 		
 		
 		
 		if(book.isPresent()) {
-			throw new ResourceNotFoundException("il already existy with name " + bookCreateDto.getBookName());
+			throw new ResourceNotFoundException("Bu isimde bir Kitap Zaten Mevcut " + bookCreateDto.getBookName());
 		}
 	
 		
@@ -103,14 +111,64 @@ public class BookService {
 		newBook.setBookImageName(bookCreateDto.getBookImageName());
 		newBook.setAuthor(author);
 		newBook.setCategory(category);
-		newBook.setName(img.getName());
-		newBook.setType(img.getType());
-		newBook.setPicByte(img.getPicByte());
+		//newBook.setName(img.getName());
+		//newBook.setType(img.getType());
+		//newBook.setPicByte(img.getPicByte());
 		//newBook.setImageModel(img);
 
 		return bookRepository.save(newBook);	
 	}
 	
+	*/
+	public Book addBook(MultipartFile file,String json) throws IOException {
+		
+	
+    	BookCreateRequest bookCreateRequest = new ObjectMapper().readValue(json,BookCreateRequest.class);
+
+    
+    
+		LocalDateTime bookCreateTime = LocalDateTime.now();
+			 
+
+		Author author = authorRepository
+	    		.findById(bookCreateRequest.getAuthorId())
+	    		.orElseThrow(()->new ResourceNotFoundException("not found "+bookCreateRequest.getAuthorId()));
+	    
+		Category category = categoryRepository
+				.findById(bookCreateRequest.getCategoryId())
+				.orElseThrow(()->new ResourceNotFoundException("not found"+bookCreateRequest.getCategoryId()));
+		
+		Book newBook = new Book();
+		
+		Optional<Book> book = bookRepository.findByBookName(bookCreateRequest.getBookName());
+		
+	
+		
+		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				ImageUtility.compressBytes(file.getBytes()));
+		
+		
+		if(book.isPresent()) {
+			throw new ResourceNotFoundException("Bu isimde Bir Kitap Zaten Mevcut " + bookCreateRequest.getBookName());
+		}
+	
+		
+		newBook.setBookName(bookCreateRequest.getBookName());
+		newBook.setBookPrice(bookCreateRequest.getBookPrice());
+		newBook.setBookDetails(bookCreateRequest.getBookDetails());
+		newBook.setBookStock(bookCreateRequest.getBookStock());
+		newBook.setCreateDate(bookCreateTime);
+		newBook.setBookImageName(bookCreateRequest.getBookImageName());
+		newBook.setAuthor(author);
+		newBook.setCategory(category);
+		newBook.setName(img.getName());
+		newBook.setType(img.getType());
+		newBook.setPicByte(ImageUtility.decompressBytes(img.getPicByte()));	
+		 
+		 
+		 return bookRepository.save(newBook);	
+	}
+
 
 	
 	public List<Book> getAllBook(){
@@ -118,8 +176,8 @@ public class BookService {
 		 List<Book> foods = bookRepository.findAll();
 	        for (Book book:foods){
 	        
-	            if(book.getImageModel() != null){
-	            	book.getImageModel().setPicByte(ImageUtility.decompressBytes(book.getImageModel().getPicByte()));
+	            if(book !=null){
+	            	book.setPicByte(ImageUtility.decompressBytes(book.getPicByte()));
 	            }
 	        }
 
@@ -169,8 +227,8 @@ public class BookService {
 		return bookRepository.save(updatedBook);
 	}
 	
-	public Optional<Book> findByBookName(String bookName){
-		return bookRepository.findByBookName(bookName);
+	public List<Book> findByBookName(String bookName){
+		return bookRepository.findByBookNameContaining(bookName);
 	}
 	
 	public List<Book> getByBookName(String bookName){
