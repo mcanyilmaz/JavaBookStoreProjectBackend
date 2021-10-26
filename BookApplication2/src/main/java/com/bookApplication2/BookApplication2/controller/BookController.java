@@ -42,6 +42,23 @@ public class BookController {
 		this.bookRepository = bookRepository;
 	}
 	
+	@GetMapping("/findTop10ByOrderByRating/")
+	public List<Book> getTop10BookByRating(){
+		return bookRepository.findTop10ByOrderByRatingDesc();
+	}
+
+	@GetMapping("/findTop8ByOrderByBookNameDesc")
+	public List<Book> get5Data (){
+		return bookRepository.findTop8ByOrderByBookNameDesc();
+	}
+	
+	@GetMapping("/findTop5ByOrderByBookStock")
+	public List<Book> findTop5ByOrderByBookStock (){
+		return bookRepository.findTop5ByOrderByBookStock();
+	}
+	
+	
+	
 	@GetMapping("pageableBook/{id}")
 	public Page<Book> pagination(@RequestParam int pageSize, @RequestParam int page){
 	
@@ -107,6 +124,10 @@ public class BookController {
 		
 	}*/
 	
+	@PostMapping("updateBookRating/")
+	public Book updateBookRating(@RequestBody BookCreateRequest bookCreateRequest) {
+		return bookService.updateBookRating(bookCreateRequest);
+	}
 	
 	
 	@GetMapping("/getAllBook")
@@ -123,9 +144,9 @@ public class BookController {
 		// bookService.deleteBook(id);
 	}
 	
-	@PutMapping("/updateBook/{id}")
-	public ResponseEntity<Book> updateBook(@PathVariable int id, @RequestBody BookCreateRequest bookCreateRequest) {
-		return new ResponseEntity<Book>(bookService.updateBook(id, bookCreateRequest),HttpStatus.OK);
+	@PutMapping("/updateBook/")
+	public ResponseEntity<Book> updateBook(@RequestParam("imageFile")MultipartFile file, String payload) throws IOException {
+		return new ResponseEntity<Book>(bookService.updateBook(file, payload),HttpStatus.OK);
 		//return bookService.updateBook(id, book);
 	}
 	

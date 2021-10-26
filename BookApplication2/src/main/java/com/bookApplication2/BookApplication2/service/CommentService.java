@@ -20,6 +20,7 @@ import com.bookApplication2.BookApplication2.repository.CommentRepository;
 import com.bookApplication2.BookApplication2.repository.UserRepository;
 import com.bookApplication2.BookApplication2.requests.CommentCreateRequest;
 import com.bookApplication2.BookApplication2.response.MessageResponse;
+import com.bookApplication2.BookApplication2.util.ImageUtility;
 
 @Service
 
@@ -65,7 +66,23 @@ public class CommentService {
 	}
 	
 	public List<Comment> getAllComments(){
-		return commentRepository.findAll();
+		
+			
+		List<Comment> comments = commentRepository.findAll();
+		
+		
+	        for (Comment comment:comments){
+	        
+	        	System.out.println(comment.getUser());
+	            if(comment.getUser() !=null){
+	            	comment.getUser().setPicByte(ImageUtility.decompressBytes(comment.getUser().getPicByte()));
+	            	comment.setUser(comment.getUser());
+	            }
+	        }
+
+	        return comments;
+		
+		//return commentRepository.findAll();
 	}
 	
 	

@@ -26,6 +26,37 @@ public class OrderService {
 		this.bookRepository = bookRepository;
 	}
 	
+	
+	public BookOrder newAddOrder(OrderCreateRequest orderCreateRequest){
+		BookOrder order = new BookOrder();
+		
+		
+		LocalDateTime createTime = LocalDateTime.now();
+		Random random = new Random();
+		int orderNumber = Math.abs(random.nextInt());
+	
+		
+		order.setBookName(orderCreateRequest.getBookName());
+		order.setBookPiece(orderCreateRequest.getBookPiece());
+		order.setBookPrice(orderCreateRequest.getBookPrice());
+		order.setTotalPrice(orderCreateRequest.getTotalPrice());
+		order.setCreateTime(createTime);
+		order.setOrderNumber(orderNumber);
+		
+		
+			
+		
+		
+		
+		order.setAddress(orderCreateRequest.getAddress());
+		order.setUsername(orderCreateRequest.getUsername());
+		order.setBookList(orderCreateRequest.getBookList());
+		return orderRepository.save(order);
+	}
+	
+	
+	
+	
 	public List<BookOrder> getAllOrder(){
 		return orderRepository.findAll();
 	}
@@ -42,7 +73,8 @@ public class OrderService {
 		
 		LocalDateTime createTime = LocalDateTime.now();
 		Random random = new Random();
-		int orderNumber = random.nextInt();
+		int orderNumber = Math.abs(random.nextInt());
+	
 		
 		order.setBookName(orderCreateRequest.getBookName());
 		order.setBookPiece(orderCreateRequest.getBookPiece());
@@ -52,6 +84,8 @@ public class OrderService {
 		order.setUsername(orderCreateRequest.getUsername());
 		order.setCreateTime(createTime);
 		order.setOrderNumber(orderNumber);
+		//Her Sipariş ilk oluşturulduğu anda Hazırlanıyor statüsünde olarak db'ye yazıldı.
+		//order.setState("Hazırlanıyor");
 		
 		return orderRepository.save(order);
 		
@@ -65,4 +99,13 @@ public class OrderService {
 	public List<BookOrder> findAllOrderByUsername(String userName) {
 		return orderRepository.findAllOrderByUsername(userName);
 	}
+	
+	public BookOrder updateOrderState(int id,OrderCreateRequest orderCreateRequest) {
+		BookOrder bookOrder = orderRepository.findById(id).orElseThrow(null);
+		bookOrder.setState(orderCreateRequest.getState());
+		
+		return orderRepository.save(bookOrder);
+	}
+	
+	
 }

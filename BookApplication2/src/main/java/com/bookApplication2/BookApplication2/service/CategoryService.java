@@ -110,4 +110,12 @@ public class CategoryService {
 		return categoryRepository.findByCategoryName(categoryCreateDto);
 	}
 	
+	public List<Category> findByCategoryNameContaining(String categoryName) {
+		return categoryRepository.findByCategoryNameContaining(categoryName);
+				
+	}
+	
+	
+	
+	
 }

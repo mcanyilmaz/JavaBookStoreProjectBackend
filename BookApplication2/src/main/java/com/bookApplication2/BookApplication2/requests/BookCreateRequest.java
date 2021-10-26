@@ -14,7 +14,7 @@ public class BookCreateRequest {
 	
 	private String bookName;
 	
-	private int bookPrice;
+	private Double bookPrice;
 	
 	private int bookStock;
 	
@@ -27,6 +27,8 @@ public class BookCreateRequest {
 	private int categoryId;
 	
 	private String bookImageName;
+	
+	private int rating;
 	
 	//private MultipartFile file;
 	

@@ -62,6 +62,12 @@ public class CategoryController {
 	}*/
 	
 	
+	@GetMapping("/findByCategoryNameContaining/")
+	public ResponseEntity<List<Category>> findByCategoryNameContaining(@RequestParam String categoryName){
+		return new ResponseEntity<List<Category>>(categoryService.findByCategoryNameContaining(categoryName),HttpStatus.OK);
+	}
+	
+	
 	@GetMapping("/getAllCategory")
 	public ResponseEntity<List<Category>> getAllCategory(){
 		return new ResponseEntity<List<Category>>(categoryService.getAllCategory(),HttpStatus.OK);

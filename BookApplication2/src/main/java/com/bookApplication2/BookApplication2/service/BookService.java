@@ -21,6 +21,7 @@ import com.bookApplication2.BookApplication2.model.ImageModel;
 import com.bookApplication2.BookApplication2.repository.AuthorRepository;
 import com.bookApplication2.BookApplication2.repository.BookRepository;
 import com.bookApplication2.BookApplication2.repository.CategoryRepository;
+import com.bookApplication2.BookApplication2.requests.AuthorCreateRequest;
 import com.bookApplication2.BookApplication2.requests.BookCreateRequest;
 import com.bookApplication2.BookApplication2.util.ImageUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -159,6 +160,7 @@ public class BookService {
 		newBook.setBookStock(bookCreateRequest.getBookStock());
 		newBook.setCreateDate(bookCreateTime);
 		newBook.setBookImageName(bookCreateRequest.getBookImageName());
+		newBook.setRating(0);
 		newBook.setAuthor(author);
 		newBook.setCategory(category);
 		newBook.setName(img.getName());
@@ -169,19 +171,35 @@ public class BookService {
 		 return bookRepository.save(newBook);	
 	}
 
+	public Book updateBookRating(BookCreateRequest bookCreateRequest) {
+		Book book = bookRepository.findById(bookCreateRequest.getId()).orElseThrow(null);
+		
+	//	System.out.println(bookCreateRequest.getRating());
+		int oldRatingValue = book.getRating();
+		int newRatingValue = oldRatingValue + bookCreateRequest.getRating();
+	
+		//System.out.println(newRatingValue);
 
+		
+		book.setRating(newRatingValue);
+		
+		return bookRepository.save(book);
+	}
+
+	
+	
 	
 	public List<Book> getAllBook(){
 		
-		 List<Book> foods = bookRepository.findAll();
-	        for (Book book:foods){
+		 List<Book> books = bookRepository.findAll();
+	       /* for (Book book:books){
 	        
 	            if(book !=null){
 	            	book.setPicByte(ImageUtility.decompressBytes(book.getPicByte()));
 	            }
-	        }
+	        }*/
 
-	        return foods;
+	        return books;
 	        
 		//return bookRepository.findAll();
 	}
@@ -189,11 +207,42 @@ public class BookService {
 	public void deleteBook(int id) {
 		bookRepository.deleteById(id);
 	}
-	public Book updateBook(int id, BookCreateRequest bookCreateRequest) {
+	public Book updateBook(MultipartFile file, String json)throws IOException  {
+		
+		
+		BookCreateRequest bookCreateRequest= new ObjectMapper().readValue(json,BookCreateRequest.class);
+
+    	
+		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				ImageUtility.compressBytes(file.getBytes()));
+		
+		Book book = bookRepository.findById(bookCreateRequest.getId())
+				.orElseThrow(()-> new ResourceNotFoundException("not found id" +bookCreateRequest.getId()));
+		
+		Author author = authorRepository
+	    		.findById(bookCreateRequest.getAuthorId())
+	    		.orElseThrow(()->new ResourceNotFoundException("not found "+bookCreateRequest.getAuthorId()));
+	    
+		Category category = categoryRepository
+				.findById(bookCreateRequest.getCategoryId())
+				.orElseThrow(()->new ResourceNotFoundException("not found"+bookCreateRequest.getCategoryId()));
+		
+		book.setBookName(bookCreateRequest.getBookName());
+		book.setBookPrice(bookCreateRequest.getBookPrice());
+		book.setBookStock(bookCreateRequest.getBookStock());
+		book.setBookDetails(bookCreateRequest.getBookDetails());
+		book.setAuthor(author);
+		book.setCategory(category);;
+		
+		book.setName(file.getName());
+		book.setType(file.getContentType());
+	
+		book.setPicByte(ImageUtility.decompressBytes(img.getPicByte()));	
+		
 		
 		//Book newBook = bookRepository.findById(id)
 				//.orElseThrow(()->new ResourceNotFoundException("not found "+id));
-		
+		/*
 		
 		Book newBook = bookRepository.findById(id)
 				.orElseThrow(()->new ResourceNotFoundException("not found "+id));
@@ -214,8 +263,8 @@ public class BookService {
 			newBook.setAuthor(author);
 			newBook.setCategory(category);;
 			
-
-		return bookRepository.save(newBook);	
+*/
+		return bookRepository.save(book);	
 	}
 	
 	public Book updateBookStock(String bookName,int bookStock) {

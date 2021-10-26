@@ -26,6 +26,19 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 	
 	Page<Book> getByCategory_id(int categoryId,Pageable pageable);
 
+	//List<Book> findTop5ByOrderByID(Pageable pageable);
+	List<Book> findTop8ByOrderByBookNameDesc();
+
+
+	List<Book> findTop5ByOrderByBookStock();
+	
+	List<Book> findTop10ByOrderByRatingDesc();
+
+
+	//Book findByRatingByOrderByBookId(int id);
+	
+	//Book findByIdByOrderByRating(int bookId);
+
 
 	
 

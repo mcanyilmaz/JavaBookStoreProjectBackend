@@ -1,6 +1,9 @@
 package com.bookApplication2.BookApplication2.requests;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.bookApplication2.BookApplication2.model.Book;
 
 import lombok.Data;
 
@@ -25,6 +28,9 @@ public class OrderCreateRequest {
 	
 	private String address;
 	
+	private String state;
+	
+	private List<Book> bookList;
 	
 	
 }

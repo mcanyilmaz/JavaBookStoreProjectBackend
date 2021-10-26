@@ -67,8 +67,10 @@ public class UserService implements UserDetailsService {
 		
 		User user =  userRepository.getByUsername(username);
 		
+		
+		
 
-		user.setPicByte(ImageUtility.decompressBytes(user.getPicByte()));
+		//user.setPicByte(ImageUtility.decompressBytes(user.getPicByte()));
 		return user;
 	}
 	
@@ -158,7 +160,8 @@ public class UserService implements UserDetailsService {
 		user.setUserPhoneNumber(userCreateDataDetails.getUserPhoneNumber());		
 		user.setUserAddress(userCreateDataDetails.getUserAddress());
 		user.setImageName(img.getName());
-		user.setPicByte(img.getPicByte());	
+		user.setPicByte(file.getBytes());
+	
 		user.setType(img.getType());
 
 		

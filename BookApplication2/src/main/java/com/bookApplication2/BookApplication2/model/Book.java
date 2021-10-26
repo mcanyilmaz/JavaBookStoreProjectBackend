@@ -45,7 +45,7 @@ public class Book implements Serializable {
 	private String bookName;
 	
 	@Column(name=BookAppConstant.COL_BOOKPRICE)
-	private int bookPrice;
+	private Double bookPrice;
 		
 	@Column(name=BookAppConstant.COL_BOOKDETAILS,length =400)
 	private String bookDetails;
@@ -68,6 +68,9 @@ public class Book implements Serializable {
 	@JoinColumn(name = BookAppConstant.COL_CATEGORYID)
 	private Category category;
 	
+	
+	@Column(name="rating")
+	private int rating;
 	
 	//@OneToOne
 	//@JoinColumn(name="image_id")

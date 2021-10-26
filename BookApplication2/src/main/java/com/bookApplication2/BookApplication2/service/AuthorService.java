@@ -25,10 +25,12 @@ import com.bookApplication2.BookApplication2.exception.ResourceNotFoundException
 import com.bookApplication2.BookApplication2.model.Author;
 import com.bookApplication2.BookApplication2.model.Book;
 import com.bookApplication2.BookApplication2.model.ImageModel;
+import com.bookApplication2.BookApplication2.model.User;
 import com.bookApplication2.BookApplication2.repository.AuthorRepository;
 import com.bookApplication2.BookApplication2.requests.AuthorCreateRequest;
 import com.bookApplication2.BookApplication2.requests.AuthorUpdateRequest;
 import com.bookApplication2.BookApplication2.requests.BookCreateRequest;
+import com.bookApplication2.BookApplication2.requests.UserCreateDataDetails;
 import com.bookApplication2.BookApplication2.util.ImageUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -104,8 +106,42 @@ public class AuthorService {
 		authorRepository.deleteById(id);
 	}
 	
-	public Author updateAuthor(int id, AuthorUpdateRequest authorUpdateDto) {
-		Author newAuthor  = authorRepository.findById(id).orElseThrow(() ->new ResourceNotFoundException("not found " + id));
+	public Author updateAuthor(MultipartFile file, String json ) throws IOException {
+		
+		
+		AuthorCreateRequest authorCreateRequest= new ObjectMapper().readValue(json,AuthorCreateRequest.class);
+
+    	
+		ImageModel img = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				ImageUtility.compressBytes(file.getBytes()));
+		
+		Author author = authorRepository.findById(authorCreateRequest.getId())
+				.orElseThrow(()-> new ResourceNotFoundException("not found id" +authorCreateRequest.getId()));
+	
+		LocalDateTime updatedTime = LocalDateTime.now();
+		
+		author.setAuthorName(authorCreateRequest.getAuthorName());
+		author.setAuthorAbout(authorCreateRequest.getAuthorAbout());
+		author.setCreatedDate(author.getCreatedDate());
+		author.setUpdateDate(updatedTime);
+		author.setName(file.getName());
+		author.setType(file.getContentType());
+	
+		author.setPicByte(ImageUtility.decompressBytes(img.getPicByte()));	
+		
+		
+		;
+		/*user.setUserPhoneNumber(userCreateDataDetails.getUserPhoneNumber());		
+		user.setUserAddress(userCreateDataDetails.getUserAddress());
+		user.setImageName(img.getName());
+		user.setPicByte(file.getBytes());
+	
+		user.setType(img.getType());*/
+
+		
+	
+		
+		/*Author newAuthor  = authorRepository.findById(id).orElseThrow(() ->new ResourceNotFoundException("not found " + id));
 		
 		LocalDateTime updatedTime = LocalDateTime.now();
 		
@@ -117,8 +153,8 @@ public class AuthorService {
 		newAuthor.setCreatedDate(newAuthor.getCreatedDate());
 		newAuthor.setUpdateDate(updatedTime);
 		
-		
-		return authorRepository.save(newAuthor);
+		*/
+		return authorRepository.save(author);
 		
 		
 	}

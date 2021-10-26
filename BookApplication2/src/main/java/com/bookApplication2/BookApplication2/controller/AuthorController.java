@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bookApplication2.BookApplication2.model.Author;
 import com.bookApplication2.BookApplication2.model.Book;
+import com.bookApplication2.BookApplication2.model.User;
 import com.bookApplication2.BookApplication2.requests.AuthorCreateRequest;
 import com.bookApplication2.BookApplication2.requests.AuthorUpdateRequest;
 import com.bookApplication2.BookApplication2.service.AuthorService;
@@ -71,9 +72,13 @@ public class AuthorController {
 		 authorService.deleteAuthor(id);
 	}
 	
-	@PutMapping("/updateAuthor/{id}")
-	public Author updateAuthor(@PathVariable int id, @RequestBody AuthorUpdateRequest  authorUpdateDto) {
-		return authorService.updateAuthor(id, authorUpdateDto);
+	
+
+	
+	
+	@PutMapping("/updateAuthor/")
+	public Author updateAuthor(@RequestParam("imageFile")MultipartFile file, String payload) throws IOException {
+		return authorService.updateAuthor(file, payload);
 	}
 	
 	@PostMapping("findByAuthorName/")
