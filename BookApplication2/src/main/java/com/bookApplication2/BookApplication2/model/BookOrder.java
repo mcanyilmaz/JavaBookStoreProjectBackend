@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bookApplication2.BookApplication2.util.BookAppConstant;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -38,6 +39,8 @@ public class BookOrder implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	
 	
 	@Column(name=BookAppConstant.COL_ORDERBOOKNAME)
 	private String bookName;
@@ -61,6 +64,8 @@ public class BookOrder implements Serializable {
 	@Column(name=BookAppConstant.COL_ORDERUSERNAME)
 	private String username;
 
+	@JsonFormat(pattern="dd-MM-yyyy")
+
 	@Column(name=BookAppConstant.COL_ORDERCRATETIME)
 	private LocalDateTime createTime;
 	
@@ -72,5 +77,6 @@ public class BookOrder implements Serializable {
 	@JoinColumn(name="bookList")
 
 	private List<Book> bookList;
+	
 	
 }

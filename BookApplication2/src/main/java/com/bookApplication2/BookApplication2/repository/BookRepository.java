@@ -32,7 +32,7 @@ public interface BookRepository extends JpaRepository<Book, Integer>{
 
 	List<Book> findTop5ByOrderByBookStock();
 	
-	List<Book> findTop10ByOrderByRatingDesc();
+	List<Book> findTop12ByOrderByRatingDesc();
 
 
 	//Book findByRatingByOrderByBookId(int id);

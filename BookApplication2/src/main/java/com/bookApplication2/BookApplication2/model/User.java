@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.bookApplication2.BookApplication2.util.BookAppConstant;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -62,6 +63,7 @@ public class User implements Serializable {
 	@Column(name=BookAppConstant.COL_USERADDRESS)
 	private String userAddress;
 	
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(name=BookAppConstant.COL_USERCREATETIME)
 	private LocalDateTime createTime;
 

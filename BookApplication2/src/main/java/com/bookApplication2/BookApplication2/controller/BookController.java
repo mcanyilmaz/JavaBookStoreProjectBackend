@@ -42,9 +42,9 @@ public class BookController {
 		this.bookRepository = bookRepository;
 	}
 	
-	@GetMapping("/findTop10ByOrderByRating/")
-	public List<Book> getTop10BookByRating(){
-		return bookRepository.findTop10ByOrderByRatingDesc();
+	@GetMapping("/findTop12ByOrderByRating/")
+	public List<Book> getTop12BookByRating(){
+		return bookRepository.findTop12ByOrderByRatingDesc();
 	}
 
 	@GetMapping("/findTop8ByOrderByBookNameDesc")

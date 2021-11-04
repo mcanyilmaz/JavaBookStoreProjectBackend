@@ -41,7 +41,7 @@ public class Comment implements Serializable {
 	@Column(name=BookAppConstant.COL_COMMENTCOMMENTNAME)
 	private String comment;
 	
-	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(name=BookAppConstant.COL_COMMENTCREATETIME)
 	private LocalDateTime createTime;
 	
