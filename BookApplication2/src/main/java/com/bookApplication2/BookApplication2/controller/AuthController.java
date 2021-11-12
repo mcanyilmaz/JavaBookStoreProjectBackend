@@ -104,8 +104,8 @@ public class AuthController {
 							 encoder.encode(signUpRequest.getPassword()),
 							 signUpRequest.getName(),
 							 signUpRequest.getSurname(),
-							 "henüz girilmedi",
-							 "henüz girilmedi",
+							// "henüz girilmedi",
+							// "henüz girilmedi",
 							 createdTime
 							);
 

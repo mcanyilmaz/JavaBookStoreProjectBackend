@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -74,9 +75,14 @@ public class BookOrder implements Serializable {
 	private String state = "Hazırlanıyor";
 
 	@ManyToMany(targetEntity=Book.class, fetch=FetchType.EAGER)
-	@JoinColumn(name="bookList")
-
+	@JoinColumn(name="book_list_id")
 	private List<Book> bookList;
+	
+	
+	
+	@JoinColumn(name="quantity")
+	@ElementCollection(targetClass=Integer.class)
+	private List<Integer> quantity;
 	
 	
 }

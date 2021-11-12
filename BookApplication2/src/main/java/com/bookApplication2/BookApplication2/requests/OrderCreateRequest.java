@@ -32,5 +32,7 @@ public class OrderCreateRequest {
 	
 	private List<Book> bookList;
 	
+	private List<Integer> quantityList;
+	
 	
 }

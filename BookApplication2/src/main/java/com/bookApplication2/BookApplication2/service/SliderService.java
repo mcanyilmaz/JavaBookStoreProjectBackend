@@ -2,6 +2,7 @@ package com.bookApplication2.BookApplication2.service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,6 +86,115 @@ public class SliderService {
 	        }
 
 	        return sliderData;
+	}
+	
+	
+	public List<Slider> findAllSliderByStateTrueOrderByLineNumberAsc(){
+		 List<Slider> sliderData = sliderRepository.findAllSliderByStateTrueOrderByLineNumberAsc();
+		 
+		  for (Slider slider:sliderData){
+		        
+	            if(slider != null){
+	            	slider.setPicByte(ImageUtility.decompressBytes(slider.getPicByte()));
+	            }
+	        }
+
+	        return sliderData;
+	}
+	
+	public Slider updateSliderLineNumber(int id,SliderCreateRequest sliderCreateRequest) {
+		Slider slider = sliderRepository.findById(id).orElseThrow(null);
+		Slider oldSliderLineNumber = sliderRepository.findByLineNumber(sliderCreateRequest.getLineNumber()); 
+		List<Slider> getAllSlider = sliderRepository.findAll();
+		
+	
+		if(sliderCreateRequest.getLineNumber()==1) {
+			
+			for (int i = 0; i < getAllSlider.size(); i++) {
+				if(sliderCreateRequest.getLineNumber()==getAllSlider.get(i).getLineNumber()) {
+					
+					getAllSlider.get(i).setLineNumber(slider.getLineNumber());
+					getAllSlider.get(i).setActive("");
+					slider.setLineNumber(sliderCreateRequest.getLineNumber());
+					slider.setActive("active");
+					
+					/*for (int j=getAllSlider.get(i).getLineNumber(); j <getAllSlider.size(); j++) {
+							getAllSlider.get(i).setLineNumber(j);
+							
+						}*/
+				}
+			}
+			//3 nolu idi aldım. 
+			/*slider.setLineNumber(sliderCreateRequest.getLineNumber());
+			slider.setActive("active");
+			oldSliderLineNumber.setLineNumber(id);
+			oldSliderLineNumber.setActive("");*/
+
+	
+			
+		/*	for (int i = 0; i < getAllSlider.size(); i++) {
+				if(getAllSlider.get(i).getLineNumber()==1 && getAllSlider.get(i).getActive().equals("active")) {
+					getAllSlider.get(i).setActive("");
+					getAllSlider.get(i).setLineNumber(0);
+				}
+			}*/
+			
+			
+			/*for (int i = 1; i <getAllSlider.size(); i++) {
+				getAllSlider.get(i).setLineNumber(i+1);
+				getAllSlider.get(i).setActive("");
+			}
+			*/
+			//slider.setActive("active");
+			//slider.setLineNumber(sliderCreateRequest.getLineNumber());
+			//
+			
+		}else {
+
+			//3 nolu idi aldım. 
+			//slider.setLineNumber(sliderCreateRequest.getLineNumber());
+			
+			//oldSliderLineNumber.setLineNumber(sliderCreateRequest.getLineNumber());
+
+		
+				for (int i = 0; i < getAllSlider.size(); i++) {
+					if(sliderCreateRequest.getLineNumber()==getAllSlider.get(i).getLineNumber()) {
+						
+						getAllSlider.get(i).setActive("");
+						getAllSlider.get(i).setLineNumber(slider.getLineNumber());
+						slider.setLineNumber(sliderCreateRequest.getLineNumber());
+						
+						
+						/*for (int j=getAllSlider.get(i).getLineNumber(); j <getAllSlider.size(); j++) {
+								getAllSlider.get(i).setLineNumber(j);
+								
+							}*/
+					}
+				}
+			
+		/*	for (int i = 2; i <getAllSlider.size(); i++) {
+				getAllSlider.get(i).setLineNumber(i+1);
+				getAllSlider.get(i).setActive("");
+			
+			}*/
+			
+		
+		}
+		
+		/*if(slider.getLineNumber()!=1) {
+			slider.setActive("");
+			slider.setLineNumber(sliderCreateRequest.getLineNumber());
+		
+			
+		}else {
+			slider.setActive("active");
+			slider.setLineNumber(id);
+		}*/
+		
+	
+		
+		return sliderRepository.save(slider);
+		
 	}
 	
 	

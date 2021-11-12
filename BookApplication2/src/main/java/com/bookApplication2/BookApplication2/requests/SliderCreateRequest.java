@@ -7,5 +7,8 @@ public class SliderCreateRequest {
 
 	private Boolean state;
 	
+	private String isActive;
+	private int lineNumber;
+	
 	
 }

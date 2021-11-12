@@ -51,6 +51,7 @@ public class OrderService {
 		order.setAddress(orderCreateRequest.getAddress());
 		order.setUsername(orderCreateRequest.getUsername());
 		order.setBookList(orderCreateRequest.getBookList());
+		order.setQuantity(orderCreateRequest.getQuantityList());
 		return orderRepository.save(order);
 	}
 	

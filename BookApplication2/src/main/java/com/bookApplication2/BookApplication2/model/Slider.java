@@ -42,6 +42,13 @@ public class Slider implements Serializable{
 	
 	@Column(name = BookAppConstant.COL_SLIDERSLIDERIMAGEPICBYTE, length = 10000)
 	private byte[] picByte;
+	
+	@Column(name="isActive")
+	private String active;
+	
+
+	@Column(name="lineNumber")
+	private int lineNumber;
 
 	public Slider(Boolean state, String name, String type, byte[] picByte) {
 		super();

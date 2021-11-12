@@ -14,6 +14,8 @@ public class CommentCreateRequest {
 	
 	private Long userId;
 	
+	private int totalLike=0;
+	
 	private LocalDateTime createTime;
 
 	private int bookId;

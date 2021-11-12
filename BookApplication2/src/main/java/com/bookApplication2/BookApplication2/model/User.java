@@ -56,12 +56,12 @@ public class User implements Serializable {
 	private String surname;
 	
 	@Column(name=BookAppConstant.COL_USERPERSONPHONENUMBER)
-	private String userPhoneNumber;
+	private String userPhoneNumber="henüz girilmedi";
 	
 	
 
 	@Column(name=BookAppConstant.COL_USERADDRESS)
-	private String userAddress;
+	private String userAddress="henüz girilmedi";
 	
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@Column(name=BookAppConstant.COL_USERCREATETIME)
@@ -89,15 +89,15 @@ public class User implements Serializable {
 	
 	
 	public User(String username, String email, String password,
-			String name, String surname,
-			String userPhoneNumber, String userAddress,LocalDateTime createTime) {
+			String name, String surname
+			,LocalDateTime createTime) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
-		this.userPhoneNumber = userPhoneNumber;
-		this.userAddress = userAddress;
+	//	this.userPhoneNumber = userPhoneNumber;
+		//this.userAddress = userAddress;
 		this.createTime = createTime;
 	}
 

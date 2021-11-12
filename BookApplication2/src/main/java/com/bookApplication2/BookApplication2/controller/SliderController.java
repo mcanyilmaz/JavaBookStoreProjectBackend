@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bookApplication2.BookApplication2.model.ImageModel;
 import com.bookApplication2.BookApplication2.model.Slider;
 import com.bookApplication2.BookApplication2.repository.SliderRepository;
+import com.bookApplication2.BookApplication2.requests.SliderCreateRequest;
 import com.bookApplication2.BookApplication2.requests.SliderRequest;
 import com.bookApplication2.BookApplication2.service.SliderService;
 import com.bookApplication2.BookApplication2.util.ImageUtility;
@@ -121,7 +122,15 @@ public class SliderController {
 
 	}
 	
+	@GetMapping("/findAllSliderByStateTrueOrderByLineNumberAsc")
+	public List<Slider> findAllSliderByStateTrueOrderByLineNumberAsc(){
+		return sliderService.findAllSliderByStateTrueOrderByLineNumberAsc();
+	}
 	
+	@PutMapping("updateSliderLineNumber/{id}")
+	public Slider updateSliderLineNumber(@PathVariable int id, @RequestBody SliderCreateRequest sliderCreateRequest) {
+		return sliderService.updateSliderLineNumber(id, sliderCreateRequest);
+	}
 	
 	
 	

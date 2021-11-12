@@ -46,6 +46,11 @@ public class Comment implements Serializable {
 	private LocalDateTime createTime;
 	
 	
+	@Column(name="totalLike")
+	private int totalLike=0;
+	
+	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = BookAppConstant.COL_COMMENTBOOKID)
 	private Book book;

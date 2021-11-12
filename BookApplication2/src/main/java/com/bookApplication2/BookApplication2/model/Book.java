@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -67,6 +68,10 @@ public class Book implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = BookAppConstant.COL_CATEGORYID)
 	private Category category;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "favorites")
+	private Favorite favorite;
 	
 	
 	@Column(name="rating")
